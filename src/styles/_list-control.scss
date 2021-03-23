@@ -1,0 +1,48 @@
+.list-control {
+    padding-top: 22px;
+    padding-left: 10px;
+    padding-right: 10px;
+    .main-heading {
+    }
+    .list-control__date {
+        margin-top: 42px;
+        span {
+            color: $common-color;
+        }
+    }
+    #ctrlForm {
+        padding: 22px 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .list-control__input {
+            border: none;
+            border-radius: 3px;
+            width: 80%;
+            padding: 10px;
+            color: $common-color;
+            margin: 0;
+            &::placeholder {
+                color: $light-color;
+            }
+            &:focus {
+                outline: none;
+                font-size: 1rem;
+            }
+        }
+        .list-control__button {
+    
+            padding: 10px;
+            width: 20%;
+            background: $common-color;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: .3s;
+            border: none;
+            outline: none;
+
+        }
+    }
+}

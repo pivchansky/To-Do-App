@@ -1,0 +1,120 @@
+.calendar {
+    display: flex;
+    justify-content: center;
+    padding: 22px 10px 0 10px;
+    height: 342px;
+}
+
+.vanilla-calendar *, .vanilla-calendar *:before, .vanilla-calendar *:after {
+    box-sizing: border-box;
+}
+
+.vanilla-calendar {
+    background-color: white;
+    border-radius: 3px;
+    border: solid 1px $common-color;
+    box-shadow: 1px 2px 0 rgb(0 0 0 / 10%), 0 2px 0 rgb(0 0 0 / 7%);
+    overflow: hidden;
+    max-width: 350px;
+    height: min-content;
+}
+
+.vanilla-calendar .vanilla-calendar-btn {
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    line-height: normal;
+    min-width: 27px;
+    outline: none;
+    overflow: visible;
+    padding: 0;
+    text-align: center;
+    transition: transform .5s;
+    &:hover {
+        transform: rotate(360deg);
+    }
+}
+
+.vanilla-calendar .vanilla-calendar-header {
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.vanilla-calendar .vanilla-calendar-header svg {
+    fill: $dark-color;
+}
+
+.vanilla-calendar .vanilla-calendar-header__label {
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.vanilla-calendar .vanilla-calendar-week {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid $light-color;
+    border-bottom: 1px solid $light-color;
+    user-select: none;
+}
+
+.vanilla-calendar .vanilla-calendar-week span {
+    color: $common-color;
+    flex-direction: column;
+    flex: 0 0 14.28%;
+    font-size: 1em;
+    font-weight: bold;
+    max-width: 14.28%;
+    padding: 15px 0px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.vanilla-calendar .vanilla-calendar-body {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10px
+    
+}
+
+.vanilla-calendar .vanilla-calendar-date {
+    align-items: center;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 14.28%;
+    max-width: 14.28%;
+    padding: 10px 0;
+    user-select: none;
+    transition: transform .3s;
+}
+
+
+.vanilla-calendar .vanilla-calendar-date--has-task{
+    text-decoration: underline;
+}
+
+.vanilla-calendar .vanilla-calendar-date--active {
+    cursor: pointer;
+}
+
+.vanilla-calendar .vanilla-calendar-date--today {
+    background-color: $light-color;
+}
+
+.vanilla-calendar .vanilla-calendar-date--selected {
+    background-color: $common-color;
+    color: white;
+}
+
+.vanilla-calendar .vanilla-calendar-date--disabled {
+    border-radius: 0;
+    cursor: pointer;
+    opacity: 0.2;
+}

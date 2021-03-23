@@ -1,0 +1,61 @@
+@import './src/styles/normalize.scss';
+
+@import './src/styles/variables';
+
+@import './src/styles/header';
+
+@import './src/styles/calendar';
+
+@import './src/styles/list-control';
+
+@import './src/styles/list';
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: $light-color;
+    font-family: $font-stack;
+    box-sizing: border-box;
+    color: $dark-color !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.functional-part {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#snackBar {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: $dark-color;
+    color: $common-color;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 30px;
+}
+
+#snackBar.show {
+    visibility: visible;
+    animation: fadein .5s, fadeout .5s 2.5s;
+}
+
+@keyframes fadein {
+    from{bottom: 0; opacity: 0;}
+    to{bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from{bottom: 30px; opacity: 1;}
+    to{bottom: 0; opacity: 0;}
+}
+
