@@ -1,3 +1,5 @@
 declare var VanillaCalendar;
-declare var ListElement;
+
+import { ListComponent } from "./TS_modules/components";
+
 

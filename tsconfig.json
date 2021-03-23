@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "removeComments": true,
-        "outDir": "js",
-        "outFile": "src/js/function.js"
-    },
-    "compileOnSave": true,
+  "compileOnSave": true,
+  "compilerOptions": {
+    "removeComments": true,
+    "outDir": "js"
+    // "outFile": "src/js/function.js",
+  }
 }

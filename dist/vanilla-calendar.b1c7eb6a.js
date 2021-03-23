@@ -122,12 +122,12 @@ var VanillaCalendar = function () {
   function VanillaCalendar(options) {
     function addEvent(el, type, handler) {
       if (!el) return;
-      if (el.attachEvent) el.attachEvent('on' + type, handler);else el.addEventListener(type, handler);
+      if (el.attachEvent) el.attachEvent("on" + type, handler);else el.addEventListener(type, handler);
     }
 
     function removeEvent(el, type, handler) {
       if (!el) return;
-      if (el.detachEvent) el.detachEvent('on' + type, handler);else el.removeEventListener(type, handler);
+      if (el.detachEvent) el.detachEvent("on" + type, handler);else el.removeEventListener(type, handler);
     }
 
     var opts = {
@@ -143,8 +143,8 @@ var VanillaCalendar = function () {
       month: null,
       month_label: null,
       onSelect: function onSelect(data, elem) {},
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      shortWeekday: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      shortWeekday: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     };
 
     for (var k in options) {
@@ -155,15 +155,15 @@ var VanillaCalendar = function () {
     if (!element) return;
 
     var getWeekDay = function getWeekDay(day) {
-      return ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'][day];
+      return ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"][day];
     };
 
     var createDay = function createDay(date) {
-      var newDayElem = document.createElement('div');
-      var dateElem = document.createElement('span');
+      var newDayElem = document.createElement("div");
+      var dateElem = document.createElement("span");
       dateElem.innerHTML = date.getDate();
-      newDayElem.className = 'vanilla-calendar-date';
-      newDayElem.setAttribute('data-calendar-date', date);
+      newDayElem.className = "vanilla-calendar-date";
+      newDayElem.setAttribute("data-calendar-date", date);
 
       var getDay = function getDay(date) {
         var d = date.getDay() - 1;
@@ -175,36 +175,36 @@ var VanillaCalendar = function () {
         return f.day === getDay(date) || f.day === getWeekDay(getDay(date));
       });
       var available_date = opts.availableDates.filter(function (f) {
-        return f.date === date.getFullYear() + '-' + String(date.getMonth() + 1).padStart('2', 0) + '-' + String(date.getDate()).padStart('2', 0);
+        return f.date === date.getFullYear() + "-" + String(date.getMonth() + 1).padStart("2", 0) + "-" + String(date.getDate()).padStart("2", 0);
       });
 
       if (date.getDate() === 1) {
-        newDayElem.style.marginLeft = getDay(date) * 14.28 + '%';
+        newDayElem.style.marginLeft = getDay(date) * 14.28 + "%";
       }
 
       if (opts.date.getTime() <= opts.todaysDate.getTime() - 1 && !opts.pastDates) {
-        newDayElem.classList.add('vanilla-calendar-date--disabled');
+        newDayElem.classList.add("vanilla-calendar-date--disabled");
       } else {
         if (opts.datesFilter) {
           if (available_week_day.length) {
-            newDayElem.classList.add('vanilla-calendar-date--active');
-            newDayElem.setAttribute('data-calendar-data', JSON.stringify(available_week_day[0]));
-            newDayElem.setAttribute('data-calendar-status', 'active');
+            newDayElem.classList.add("vanilla-calendar-date--active");
+            newDayElem.setAttribute("data-calendar-data", JSON.stringify(available_week_day[0]));
+            newDayElem.setAttribute("data-calendar-status", "active");
           } else if (available_date.length) {
-            newDayElem.classList.add('vanilla-calendar-date--active');
-            newDayElem.setAttribute('data-calendar-data', JSON.stringify(available_date[0]));
-            newDayElem.setAttribute('data-calendar-status', 'active');
+            newDayElem.classList.add("vanilla-calendar-date--active");
+            newDayElem.setAttribute("data-calendar-data", JSON.stringify(available_date[0]));
+            newDayElem.setAttribute("data-calendar-status", "active");
           } else {
-            newDayElem.classList.add('vanilla-calendar-date--disabled');
+            newDayElem.classList.add("vanilla-calendar-date--disabled");
           }
         } else {
-          newDayElem.classList.add('vanilla-calendar-date--active');
-          newDayElem.setAttribute('data-calendar-status', 'active');
+          newDayElem.classList.add("vanilla-calendar-date--active");
+          newDayElem.setAttribute("data-calendar-status", "active");
         }
       }
 
       if (date.toString() === opts.todaysDate.toString()) {
-        newDayElem.classList.add('vanilla-calendar-date--today');
+        newDayElem.classList.add("vanilla-calendar-date--today");
       }
 
       newDayElem.appendChild(dateElem);
@@ -212,22 +212,22 @@ var VanillaCalendar = function () {
     };
 
     var removeActiveClass = function removeActiveClass() {
-      document.querySelectorAll('.vanilla-calendar-date--selected').forEach(function (s) {
-        s.classList.remove('vanilla-calendar-date--selected');
+      document.querySelectorAll(".vanilla-calendar-date--selected").forEach(function (s) {
+        s.classList.remove("vanilla-calendar-date--selected");
       });
     };
 
     var selectDate = function selectDate() {
-      var activeDates = element.querySelectorAll('[data-calendar-status=active]');
+      var activeDates = element.querySelectorAll("[data-calendar-status=active]");
       activeDates.forEach(function (date) {
-        date.addEventListener('click', function () {
+        date.addEventListener("click", function () {
           removeActiveClass();
           var datas = this.dataset;
           var data = {};
           if (datas.calendarDate) data.date = datas.calendarDate;
           if (datas.calendarData) data.data = JSON.parse(datas.calendarData);
           opts.onSelect(data, this);
-          this.classList.add('vanilla-calendar-date--selected');
+          this.classList.add("vanilla-calendar-date--selected");
         });
       });
     };
@@ -243,7 +243,7 @@ var VanillaCalendar = function () {
 
       opts.date.setDate(1);
       opts.date.setMonth(opts.date.getMonth() - 1);
-      opts.month_label.innerHTML = opts.months[opts.date.getMonth()] + ' ' + opts.date.getFullYear();
+      opts.month_label.innerHTML = opts.months[opts.date.getMonth()] + " " + opts.date.getFullYear();
       selectDate();
     };
 
@@ -258,7 +258,7 @@ var VanillaCalendar = function () {
     };
 
     var clearCalendar = function clearCalendar() {
-      opts.month.innerHTML = '';
+      opts.month.innerHTML = "";
     };
 
     var createCalendar = function createCalendar() {
@@ -271,22 +271,22 @@ var VanillaCalendar = function () {
 
     this.init = function () {
       createCalendar();
-      opts.button_prev = document.querySelector(opts.selector + ' [data-calendar-toggle=previous]');
-      opts.button_next = document.querySelector(opts.selector + ' [data-calendar-toggle=next]');
-      opts.month = document.querySelector(opts.selector + ' [data-calendar-area=month]');
-      opts.month_label = document.querySelector(opts.selector + ' [data-calendar-label=month]');
+      opts.button_prev = document.querySelector(opts.selector + " [data-calendar-toggle=previous]");
+      opts.button_next = document.querySelector(opts.selector + " [data-calendar-toggle=next]");
+      opts.month = document.querySelector(opts.selector + " [data-calendar-area=month]");
+      opts.month_label = document.querySelector(opts.selector + " [data-calendar-label=month]");
       opts.date.setDate(1);
       createMonth();
       setWeekDayHeader();
-      addEvent(opts.button_prev, 'click', monthPrev);
-      addEvent(opts.button_next, 'click', monthNext);
+      addEvent(opts.button_prev, "click", monthPrev);
+      addEvent(opts.button_next, "click", monthNext);
     };
 
     this.destroy = function () {
-      removeEvent(opts.button_prev, 'click', monthPrev);
-      removeEvent(opts.button_next, 'click', monthNext);
+      removeEvent(opts.button_prev, "click", monthPrev);
+      removeEvent(opts.button_next, "click", monthNext);
       clearCalendar();
-      document.querySelector(opts.selector).innerHTML = '';
+      document.querySelector(opts.selector).innerHTML = "";
     };
 
     this.reset = function () {
@@ -337,7 +337,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65085" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55811" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
