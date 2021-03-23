@@ -189,50 +189,11 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/TS_modules/components.js":[function(require,module,exports) {
+},{"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/function.js":[function(require,module,exports) {
 "use strict";
 
 exports.__esModule = true;
-exports.ListComponent = void 0;
-
-var ListComponent = function () {
-  function ListComponent(options) {
-    this.taskContent = options.taskContent;
-    this.isDone = options.isDone;
-    this.randomID = options.randomID;
-    this.taskDay = options.taskDay;
-  }
-
-  ListComponent.prototype.getElement = function () {
-    var listItem = document.createElement("div");
-    listItem.classList.add("list__item");
-    listItem.setAttribute('data-task-id', this.randomID);
-    if (this.isDone) listItem.classList.add("list__item_checked");
-    listItem.innerHTML = "\n            <p class=\"list__text\">" + this.taskContent + "</p>\n            <button class=\"list__button\">Delete</button>";
-    return listItem;
-  };
-
-  return ListComponent;
-}();
-
-exports.ListComponent = ListComponent;
-},{}],"js/function.js":[function(require,module,exports) {
-"use strict";
-
-exports.__esModule = true;
-
-var components_1 = require("./TS_modules/components");
-
-var a = new components_1.ListComponent({
-  taskContent: "Hello cowboy!",
-  isDone: true,
-  randomID: "sld;fj",
-  taskDay: 983057093475
-});
-console.log(a);
-document.querySelector(".list").append(a.getElement());
-document.querySelector(".list").append(a.getElement());
-},{"./TS_modules/components":"js/TS_modules/components.js"}],"src/js/main.js":[function(require,module,exports) {
+},{}],"src/js/main.js":[function(require,module,exports) {
 "use strict";
 
 require("../styles/main.scss");
