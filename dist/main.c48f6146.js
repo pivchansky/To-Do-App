@@ -575,7 +575,7 @@ var EventClient = function (_super) {
         _this.storageControllerClass.sendStorage();
       }
 
-      if (listTarget.matches(".list__item")) {
+      if (listTarget.closest('div').matches(".list__item")) {
         listTarget.classList.toggle("list__item_checked");
 
         if (listTarget.classList.contains("list__item_checked")) {
@@ -701,7 +701,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64172" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59703" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
