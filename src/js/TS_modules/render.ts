@@ -1,6 +1,6 @@
 export class Render {
   constructor(
-    public storage: object,
+    public storage: any,
     protected domStorage: any,
     public listComponent: any
   ) {
@@ -9,31 +9,35 @@ export class Render {
     this.listComponent = listComponent;
   }
   initRender(): void {
-    let formattedToUser: string =
-      " " + this.domStorage.currentDate.toString().slice(4, 15);
+    let formattedToUser: string;
+    if (this.domStorage.currentDate) {
+      formattedToUser =
+        " " + this.domStorage.currentDate.toString().slice(4, 15);
+    } else {
+      formattedToUser = this.domStorage.datePerform.innerText;
+    }
     this.domStorage.datePerform.innerText = formattedToUser;
 
     this.domStorage.listWrapper.innerHTML = "";
 
-    if (!((+this.domStorage.currentDate).toString() in this.storage)) {
+    if ((+this.domStorage.currentDate).toString() in this.storage) {
+      for (let key in this.storage) {
+        if (key == (+this.domStorage.currentDate).toString()) {
+          this.storage[key].forEach((item) => {
+            this.domStorage.listWrapper.append(
+              this.listComponent.getElement({
+                taskContent: item.taskContent,
+                isDone: item.isDone,
+                randomID: item.randomID,
+                taskDay: item.taskDay,
+              })
+            );
+          });
+        }
+      }
+    } else {
       this.domStorage.listWrapper.innerHTML =
         '<h3 style="text-align: center;">You have not tasks for this day yet!</h3>';
-      return;
-    }
-
-    for (let key in this.domStorage.storage) {
-      if (key == (+this.domStorage.currentDate).toString()) {
-        this.domStorage.storage[key].forEach((item) => {
-          this.domStorage.listWrapper.append(
-            this.listComponent.getElement({
-              taskContent: item.taskContent,
-              isDone: item.isDone,
-              randomID: item.randomID,
-              taskDay: item.taskDay,
-            })
-          );
-        });
-      }
     }
 
     let daySet: object = this.domStorage.calendarBody.querySelectorAll("span");
@@ -69,5 +73,8 @@ export class Render {
         }
       }
     }
+  }
+  cleanInput(inp: HTMLInputElement): void {
+    inp.value = "";
   }
 }

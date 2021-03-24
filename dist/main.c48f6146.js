@@ -189,13 +189,472 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/function.js":[function(require,module,exports) {
+},{"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/TS_modules/components.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-},{}],"src/js/main.js":[function(require,module,exports) {
+exports.ListComponent = void 0;
+
+var ListComponent = function () {
+  function ListComponent() {}
+
+  ListComponent.prototype.getElement = function (options) {
+    this.taskContent = options.taskContent;
+    this.isDone = options.isDone;
+    this.randomID = options.randomID;
+    this.taskDay = options.taskDay;
+    var listItem = document.createElement("div");
+    listItem.classList.add("list__item");
+    listItem.setAttribute("data-task-id", this.randomID);
+    if (this.isDone) listItem.classList.add("list__item_checked");
+    listItem.innerHTML = "\n            <p class=\"list__text\">" + this.taskContent + "</p>\n            <button class=\"list__button\">Delete</button>";
+    return listItem;
+  };
+
+  return ListComponent;
+}();
+
+exports.ListComponent = ListComponent;
+},{}],"js/TS_modules/storage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.StorageController = exports.Storage = void 0;
+
+var Storage = function () {
+  function Storage() {}
+
+  Storage.prototype.initStorage = function () {
+    if (localStorage.getItem("toDoStorage")) {
+      this.toDoStorage = JSON.parse(localStorage.getItem("toDoStorage"));
+    }
+  };
+
+  Storage.prototype.closeStorage = function (storage) {
+    localStorage.setItem("toDoStorage", JSON.stringify(storage));
+  };
+
+  return Storage;
+}();
+
+exports.Storage = Storage;
+
+var StorageController = function () {
+  function StorageController(storage) {
+    this.storage = storage;
+    this.storage = storage;
+  }
+
+  StorageController.prototype.takeTaskById = function (id) {
+    var sought;
+
+    for (var key in this.storage) {
+      if (key.length < 13) continue;
+      this.storage[key].forEach(function (element) {
+        if (element.randomID == id) sought = element;
+      });
+    }
+
+    return sought || null;
+  };
+
+  StorageController.prototype.takeAllStorage = function () {
+    return this.storage;
+  };
+
+  StorageController.prototype.saveTask = function (options) {
+    if (this.storage[options.taskDay]) {
+      this.storage[options.taskDay].push(options);
+    } else {
+      this.storage[options.taskDay] = [options];
+    }
+  };
+
+  StorageController.prototype.updateTask = function (options) {
+    var sought = this.takeTaskById(options.randomID);
+    sought = options;
+  };
+
+  StorageController.prototype.deleteTask = function (id) {
+    var _this = this;
+
+    var sought = this.takeTaskById(id);
+    this.storage[this.takeTaskById(id).taskDay].forEach(function (element, index) {
+      if (element.randomID == id) {
+        if (_this.storage[_this.takeTaskById(id).taskDay].length > 1) {
+          delete _this.storage[_this.takeTaskById(id).taskDay][index];
+        } else {
+          delete _this.storage[_this.takeTaskById(id).taskDay];
+        }
+      }
+    });
+  };
+
+  return StorageController;
+}();
+
+exports.StorageController = StorageController;
+},{}],"js/TS_modules/idGenerator.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.IdGenerator = void 0;
+
+var IdGenerator = function () {
+  function IdGenerator() {}
+
+  IdGenerator.prototype.generate = function (min, max) {
+    if (min === void 0) {
+      min = 0;
+    }
+
+    if (max === void 0) {
+      max = 1679615;
+    }
+
+    var int = Math.floor(Math.random() * (max - min + 1)) + min;
+    return int.toString(36);
+  };
+
+  return IdGenerator;
+}();
+
+exports.IdGenerator = IdGenerator;
+},{}],"js/TS_modules/messageClient.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MessageClient = void 0;
+
+var MessageClient = function () {
+  function MessageClient() {
+    this._snackBar = document.body.querySelector("#snackBar");
+  }
+
+  MessageClient.prototype.show = function (str) {
+    var _this = this;
+
+    this._snackBar.innerHTML = str;
+    this._snackBar.className = "show";
+    setTimeout(function () {
+      return _this._snackBar.classList.remove("show");
+    }, 3000);
+  };
+
+  return MessageClient;
+}();
+
+exports.MessageClient = MessageClient;
+},{}],"js/TS_modules/render.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Render = void 0;
+
+var Render = function () {
+  function Render(storage, domStorage, listComponent) {
+    this.storage = storage;
+    this.domStorage = domStorage;
+    this.listComponent = listComponent;
+    this.storage = storage;
+    this.domStorage = domStorage;
+    this.listComponent = listComponent;
+  }
+
+  Render.prototype.initRender = function () {
+    var _this = this;
+
+    var formattedToUser;
+
+    if (this.domStorage.currentDate) {
+      formattedToUser = " " + this.domStorage.currentDate.toString().slice(4, 15);
+    } else {
+      formattedToUser = this.domStorage.datePerform.innerText;
+    }
+
+    this.domStorage.datePerform.innerText = formattedToUser;
+    this.domStorage.listWrapper.innerHTML = "";
+
+    if ((+this.domStorage.currentDate).toString() in this.storage) {
+      for (var key in this.storage) {
+        if (key == (+this.domStorage.currentDate).toString()) {
+          this.storage[key].forEach(function (item) {
+            _this.domStorage.listWrapper.append(_this.listComponent.getElement({
+              taskContent: item.taskContent,
+              isDone: item.isDone,
+              randomID: item.randomID,
+              taskDay: item.taskDay
+            }));
+          });
+        }
+      }
+    } else {
+      this.domStorage.listWrapper.innerHTML = '<h3 style="text-align: center;">You have not tasks for this day yet!</h3>';
+    }
+
+    var daySet = this.domStorage.calendarBody.querySelectorAll("span");
+
+    function converteToDate(d) {
+      var dateList = d.split(" ");
+      return new Date(Date.parse(dateList[1] + " " + dateList[2] + ", " + dateList[3]));
+    }
+
+    for (var key in daySet) {
+      var currentDateDiv = daySet[key].parentElement;
+      var currentDateText = void 0;
+
+      if (currentDateDiv) {
+        currentDateText = currentDateDiv.dataset.calendarDate;
+      } else {
+        break;
+      }
+
+      var currentSpanDate = converteToDate(currentDateText);
+      var spanDate = +daySet[key].innerText;
+      if (isNaN(spanDate)) return;
+
+      for (var key2 in this.storage) {
+        var currentDate = new Date(+key2).getDate();
+
+        if (spanDate == currentDate) {
+          daySet[key].classList.add("vanilla-calendar-date--has-task");
+        } else {
+          if (!((+currentSpanDate).toString() in this.storage)) {
+            daySet[key].classList.remove("vanilla-calendar-date--has-task");
+          }
+        }
+      }
+    }
+  };
+
+  Render.prototype.cleanInput = function (inp) {
+    inp.value = "";
+  };
+
+  return Render;
+}();
+
+exports.Render = Render;
+},{}],"js/TS_modules/DOMClient.js":[function(require,module,exports) {
+"use strict";
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EventClient = exports.ElementClient = void 0;
+
+var ElementClient = function () {
+  function ElementClient() {
+    this.calendarElment = document.querySelector("#myCalendar");
+    this.inputElement = document.querySelector("#ctrlText");
+    this.form = document.querySelector("#ctrlForm");
+    this.listWrapper = document.querySelector(".list");
+    this.datePerform = document.querySelector("#ctrlDate");
+  }
+
+  ElementClient.prototype.setSelectedElements = function (date, calendarPoint) {
+    this.currentDate = date;
+    this.currentCalendarPoint = calendarPoint;
+  };
+
+  ElementClient.prototype.setCalendarBody = function (givenElement) {
+    this.calendarBody = givenElement;
+  };
+
+  return ElementClient;
+}();
+
+exports.ElementClient = ElementClient;
+
+var EventClient = function (_super) {
+  __extends(EventClient, _super);
+
+  function EventClient(storageControllerClass, renderClass, messageController, domStorage, idGenerator, toDoStorage) {
+    var _this = _super.call(this) || this;
+
+    _this.storageControllerClass = storageControllerClass;
+    _this.renderClass = renderClass;
+    _this.messageController = messageController;
+    _this.domStorage = domStorage;
+    _this.idGenerator = idGenerator;
+    _this.toDoStorage = toDoStorage;
+    _this.storageControllerClass = storageControllerClass;
+    _this.renderClass = renderClass;
+    _this.messageController = messageController;
+    _this.domStorage = domStorage, _this.idGenerator = idGenerator;
+    _this.toDoStorage = toDoStorage;
+    return _this;
+  }
+
+  EventClient.prototype.initFormEvents = function () {
+    var _this = this;
+
+    this.form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!_this.domStorage.inputElement.value) {
+        _this.messageController.show("You need to enter correctly value!");
+
+        return;
+      }
+
+      if (_this.domStorage.datePerform.innerText == "Chose the date pls!") {
+        _this.messageController.show("You need to chose a date!");
+
+        return;
+      }
+
+      _this.storageControllerClass.saveTask({
+        taskContent: _this.domStorage.inputElement.value,
+        isDone: false,
+        randomID: _this.idGenerator.generate(),
+        taskDay: +_this.domStorage.currentDate
+      });
+
+      _this.renderClass.cleanInput(_this.domStorage.inputElement);
+
+      _this.renderClass.initRender();
+    });
+  };
+
+  EventClient.prototype.initListEvents = function () {
+    var _this = this;
+
+    this.listWrapper.addEventListener("click", function (event) {
+      var listTarget = event.target;
+
+      if (listTarget.matches(".list__button")) {
+        _this.storageControllerClass.deleteTask(listTarget.parentElement.dataset.taskId);
+
+        _this.renderClass.initRender();
+      }
+
+      if (listTarget.matches(".list__item")) {
+        listTarget.classList.toggle("list__item_checked");
+
+        if (listTarget.classList.contains("list__item_checked")) {
+          var newOptions = _this.storageControllerClass.takeTaskById(listTarget.dataset.taskId);
+
+          if (!newOptions) return;
+          newOptions.isDone = true;
+
+          _this.storageControllerClass.updateTask(newOptions);
+        } else {
+          var newOptions = _this.storageControllerClass.takeTaskById(listTarget.dataset.taskId);
+
+          newOptions.isDone = false;
+
+          _this.storageControllerClass.updateTask(newOptions);
+        }
+      }
+    });
+  };
+
+  EventClient.prototype.initCalendarChangeEvents = function () {
+    var _this = this;
+
+    this.calendarElment.addEventListener("click", function () {
+      _this.renderClass.initRender();
+    });
+  };
+
+  EventClient.prototype.initSaveBeforeClose = function () {
+    var _this = this;
+
+    window.addEventListener("beforeunload", function () {
+      _this.toDoStorage.closeStorage(_this.toDoStorage);
+    });
+  };
+
+  return EventClient;
+}(ElementClient);
+
+exports.EventClient = EventClient;
+},{}],"js/function.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var components_1 = require("./TS_modules/components");
+
+var storage_1 = require("./TS_modules/storage");
+
+var idGenerator_1 = require("./TS_modules/idGenerator");
+
+var messageClient_1 = require("./TS_modules/messageClient");
+
+var render_1 = require("./TS_modules/render");
+
+var DOMClient_1 = require("./TS_modules/DOMClient");
+
+var storage = new storage_1.Storage();
+storage.initStorage();
+var storageDo = new storage_1.StorageController(storage.toDoStorage);
+var dom = new DOMClient_1.ElementClient();
+var myCalendar = new VanillaCalendar({
+  selector: "#myCalendar",
+  pastDates: false,
+  onSelect: function onSelect(data, elem) {
+    function converteToDate(d) {
+      var dateList = d.date.split(" ");
+      return new Date(Date.parse(dateList[1] + " " + dateList[2] + ", " + dateList[3]));
+    }
+
+    var selectedDate = converteToDate(data);
+    dom.setSelectedElements(selectedDate, elem);
+  }
+});
+dom.setCalendarBody(document.body.querySelector(".vanilla-calendar-body"));
+var component = new components_1.ListComponent();
+var idGenerator = new idGenerator_1.IdGenerator();
+var message = new messageClient_1.MessageClient();
+var renderMashine = new render_1.Render(storage, dom, component);
+var client = new DOMClient_1.EventClient(storageDo, renderMashine, message, dom, idGenerator, storage.toDoStorage);
+client.initFormEvents();
+client.initListEvents();
+client.initCalendarChangeEvents();
+client.initSaveBeforeClose();
+},{"./TS_modules/components":"js/TS_modules/components.js","./TS_modules/storage":"js/TS_modules/storage.js","./TS_modules/idGenerator":"js/TS_modules/idGenerator.js","./TS_modules/messageClient":"js/TS_modules/messageClient.js","./TS_modules/render":"js/TS_modules/render.js","./TS_modules/DOMClient":"js/TS_modules/DOMClient.js"}],"src/js/main.js":[function(require,module,exports) {
 "use strict";
 
 require("../styles/main.scss");
@@ -229,7 +688,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55811" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55476" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

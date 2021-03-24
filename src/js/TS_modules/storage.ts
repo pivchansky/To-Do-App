@@ -3,13 +3,14 @@ export class Storage {
   constructor() {}
 
   initStorage(): void {
-    if (!localStorage.getItem("toDoStorage")) {
-      this.toDoStorage = {};
-    }
-
     if (localStorage.getItem("toDoStorage")) {
+      // console.log(localStorage.getItem("toDoStorage"));
       this.toDoStorage = JSON.parse(localStorage.getItem("toDoStorage"));
     }
+  }
+
+  closeStorage(storage: object): void {
+    localStorage.setItem("toDoStorage", JSON.stringify(storage));
   }
 }
 
@@ -28,12 +29,14 @@ export class StorageController {
   }
 
   takeTaskById(id: string): any {
+    let sought;
     for (let key in this.storage) {
+      if (key.length < 13) continue;
       this.storage[key].forEach((element) => {
-        if (element.randomID == id) return element;
+        if (element.randomID == id) sought = element;
       });
     }
-    return null;
+    return sought || null;
   }
 
   takeAllStorage(): object {
@@ -54,9 +57,14 @@ export class StorageController {
   }
 
   deleteTask(id: string): void {
+    let sought = this.takeTaskById(id);
     this.storage[this.takeTaskById(id).taskDay].forEach((element, index) => {
       if (element.randomID == id) {
-        delete this.storage[this.takeTaskById(id).taskDay][index];
+        if (this.storage[this.takeTaskById(id).taskDay].length > 1) {
+          delete this.storage[this.takeTaskById(id).taskDay][index];
+        } else {
+          delete this.storage[this.takeTaskById(id).taskDay];
+        }
       }
     });
   }

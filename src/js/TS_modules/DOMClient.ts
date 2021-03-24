@@ -6,6 +6,7 @@ export class ElementClient {
   public currentDate: Date;
   public currentCalendarPoint: HTMLElement;
   public datePerform: HTMLSpanElement;
+  public calendarBody: HTMLElement;
 
   constructor() {
     this.calendarElment = document.querySelector("#myCalendar");
@@ -20,8 +21,8 @@ export class ElementClient {
     this.currentCalendarPoint = calendarPoint;
   }
 
-  set calendarBody(element: HTMLElement) {
-    this.calendarBody = this.calendarBody;
+  setCalendarBody(givenElement: HTMLElement) {
+    this.calendarBody = givenElement;
   }
 }
 
@@ -34,13 +35,15 @@ export class EventClient extends ElementClient {
     public renderClass: any,
     public messageController: any,
     public domStorage: any,
-    public idGenerator: any
+    public idGenerator: any,
+    public toDoStorage: any
   ) {
     super();
     this.storageControllerClass = storageControllerClass;
     this.renderClass = renderClass;
     this.messageController = messageController;
     (this.domStorage = domStorage), (this.idGenerator = idGenerator);
+    this.toDoStorage = toDoStorage;
   }
 
   initFormEvents(): void {
@@ -60,31 +63,34 @@ export class EventClient extends ElementClient {
         taskContent: this.domStorage.inputElement.value,
         isDone: false,
         randomID: this.idGenerator.generate(),
-        taskDay: (+this.domStorage.currentDate).toString(),
+        taskDay: +this.domStorage.currentDate,
       });
-
-      this.renderClass.render();
+      this.renderClass.cleanInput(this.domStorage.inputElement);
+      this.renderClass.initRender();
     });
   }
 
   initListEvents(): void {
     this.listWrapper.addEventListener("click", (event) => {
-      let target: any = event.target;
-      if (target.matches(".list__button")) {
-        this.storageControllerClass.delete(target.parentElement.dataset.taskId);
-        this.renderClass.render();
+      let listTarget: any = event.target;
+      if (listTarget.matches(".list__button")) {
+        this.storageControllerClass.deleteTask(
+          listTarget.parentElement.dataset.taskId
+        );
+        this.renderClass.initRender();
       }
-      if (target.matches(".list__item")) {
-        target.classList.toggle("list__item_checked");
-        if (target.classList.contains("list__item_checked")) {
+      if (listTarget.matches(".list__item")) {
+        listTarget.classList.toggle("list__item_checked");
+        if (listTarget.classList.contains("list__item_checked")) {
           let newOptions: any = this.storageControllerClass.takeTaskById(
-            target.dataset.taskId
+            listTarget.dataset.taskId
           );
+          if (!newOptions) return;
           newOptions.isDone = true;
           this.storageControllerClass.updateTask(newOptions);
         } else {
           let newOptions: any = this.storageControllerClass.takeTaskById(
-            target.dataset.taskId
+            listTarget.dataset.taskId
           );
           newOptions.isDone = false;
           this.storageControllerClass.updateTask(newOptions);
@@ -94,11 +100,13 @@ export class EventClient extends ElementClient {
   }
 
   initCalendarChangeEvents(): void {
-    let buttons: any = this.calendarElment.querySelectorAll("button");
-    for (let button of buttons) {
-      button.addEventListener("click", () => {
-        this.renderClass.render();
-      });
-    }
+    this.calendarElment.addEventListener("click", () => {
+      this.renderClass.initRender();
+    });
+  }
+  initSaveBeforeClose(): void {
+    window.addEventListener("beforeunload", () => {
+      this.toDoStorage.closeStorage(this.toDoStorage);
+    });
   }
 }

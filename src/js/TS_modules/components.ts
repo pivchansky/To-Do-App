@@ -4,17 +4,16 @@ export class ListComponent {
   randomID: string;
   taskDay: number;
 
-  constructor(options: any) {
+  constructor() {}
+
+  getElement(options: any): HTMLElement {
     this.taskContent = options.taskContent;
     this.isDone = options.isDone;
     this.randomID = options.randomID;
     this.taskDay = options.taskDay;
-  }
-
-  getElement(): HTMLElement {
     let listItem: HTMLElement = document.createElement("div");
     listItem.classList.add("list__item");
-    listItem.setAttribute('data-task-id', this.randomID);
+    listItem.setAttribute("data-task-id", this.randomID);
     if (this.isDone) listItem.classList.add("list__item_checked");
     listItem.innerHTML = `
             <p class="list__text">${this.taskContent}</p>
