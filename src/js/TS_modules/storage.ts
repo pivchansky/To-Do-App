@@ -10,10 +10,6 @@ export class Storage {
       this.toDoStorage = {};
     }
   }
-
-  closeStorage(storage: object): void {
-    localStorage.setItem("toDoStorage", JSON.stringify(storage));
-  }
 }
 
 // the basic structure of storage will be:
@@ -69,5 +65,9 @@ export class StorageController {
         }
       }
     });
+  }
+
+  sendStorage(): void {
+    localStorage.setItem("toDoStorage", JSON.stringify(this.storage));
   }
 }

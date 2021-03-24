@@ -65,12 +65,14 @@ export class EventClient extends ElementClient {
         randomID: this.idGenerator.generate(),
         taskDay: +this.domStorage.currentDate,
       });
+      this.storageControllerClass.sendStorage();
       this.renderClass.cleanInput(this.domStorage.inputElement);
       this.renderClass.initRender();
     });
   }
 
   initListEvents(): void {
+    this.renderClass.initRender();
     this.listWrapper.addEventListener("click", (event) => {
       let listTarget: any = event.target;
       if (listTarget.matches(".list__button")) {
@@ -78,6 +80,7 @@ export class EventClient extends ElementClient {
           listTarget.parentElement.dataset.taskId
         );
         this.renderClass.initRender();
+        this.storageControllerClass.sendStorage();
       }
       if (listTarget.matches(".list__item")) {
         listTarget.classList.toggle("list__item_checked");
@@ -95,6 +98,7 @@ export class EventClient extends ElementClient {
           newOptions.isDone = false;
           this.storageControllerClass.updateTask(newOptions);
         }
+        this.storageControllerClass.sendStorage();
       }
     });
   }
@@ -102,11 +106,6 @@ export class EventClient extends ElementClient {
   initCalendarChangeEvents(): void {
     this.calendarElment.addEventListener("click", () => {
       this.renderClass.initRender();
-    });
-  }
-  initSaveBeforeClose(): void {
-    window.addEventListener("beforeunload", () => {
-      this.toDoStorage.closeStorage(this.toDoStorage);
     });
   }
 }

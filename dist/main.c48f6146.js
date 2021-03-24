@@ -237,10 +237,6 @@ var Storage = function () {
     }
   };
 
-  Storage.prototype.closeStorage = function (storage) {
-    localStorage.setItem("toDoStorage", JSON.stringify(storage));
-  };
-
   return Storage;
 }();
 
@@ -295,6 +291,10 @@ var StorageController = function () {
         }
       }
     });
+  };
+
+  StorageController.prototype.sendStorage = function () {
+    localStorage.setItem("toDoStorage", JSON.stringify(this.storage));
   };
 
   return StorageController;
@@ -549,6 +549,8 @@ var EventClient = function (_super) {
         taskDay: +_this.domStorage.currentDate
       });
 
+      _this.storageControllerClass.sendStorage();
+
       _this.renderClass.cleanInput(_this.domStorage.inputElement);
 
       _this.renderClass.initRender();
@@ -558,6 +560,7 @@ var EventClient = function (_super) {
   EventClient.prototype.initListEvents = function () {
     var _this = this;
 
+    this.renderClass.initRender();
     this.listWrapper.addEventListener("click", function (event) {
       var listTarget = event.target;
 
@@ -565,6 +568,8 @@ var EventClient = function (_super) {
         _this.storageControllerClass.deleteTask(listTarget.parentElement.dataset.taskId);
 
         _this.renderClass.initRender();
+
+        _this.storageControllerClass.sendStorage();
       }
 
       if (listTarget.matches(".list__item")) {
@@ -584,6 +589,8 @@ var EventClient = function (_super) {
 
           _this.storageControllerClass.updateTask(newOptions);
         }
+
+        _this.storageControllerClass.sendStorage();
       }
     });
   };
@@ -593,14 +600,6 @@ var EventClient = function (_super) {
 
     this.calendarElment.addEventListener("click", function () {
       _this.renderClass.initRender();
-    });
-  };
-
-  EventClient.prototype.initSaveBeforeClose = function () {
-    var _this = this;
-
-    window.addEventListener("beforeunload", function () {
-      _this.toDoStorage.closeStorage(_this.toDoStorage);
     });
   };
 
@@ -653,7 +652,6 @@ var client = new DOMClient_1.EventClient(storageDo, renderMashine, message, dom,
 client.initFormEvents();
 client.initListEvents();
 client.initCalendarChangeEvents();
-client.initSaveBeforeClose();
 },{"./TS_modules/components":"js/TS_modules/components.js","./TS_modules/storage":"js/TS_modules/storage.js","./TS_modules/idGenerator":"js/TS_modules/idGenerator.js","./TS_modules/messageClient":"js/TS_modules/messageClient.js","./TS_modules/render":"js/TS_modules/render.js","./TS_modules/DOMClient":"js/TS_modules/DOMClient.js"}],"src/js/main.js":[function(require,module,exports) {
 "use strict";
 

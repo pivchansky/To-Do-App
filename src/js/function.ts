@@ -44,4 +44,4 @@ let client = new EventClient(
 client.initFormEvents();
 client.initListEvents();
 client.initCalendarChangeEvents();
-client.initSaveBeforeClose();
+
