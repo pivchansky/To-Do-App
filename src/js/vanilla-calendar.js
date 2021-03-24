@@ -132,7 +132,7 @@ let VanillaCalendar = (function () {
 
     const selectDate = function () {
       let activeDates = element.querySelectorAll(
-        "[data-calendar-status=active]"
+        ".vanilla-calendar-date"
       );
       activeDates.forEach((date) => {
         date.addEventListener("click", function () {

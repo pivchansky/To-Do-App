@@ -458,7 +458,7 @@ template {
 .vanilla-calendar .vanilla-calendar-date--disabled {
   border-radius: 0;
   cursor: pointer;
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
 .list-control {

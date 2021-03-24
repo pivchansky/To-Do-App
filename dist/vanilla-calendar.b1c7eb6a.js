@@ -218,7 +218,7 @@ var VanillaCalendar = function () {
     };
 
     var selectDate = function selectDate() {
-      var activeDates = element.querySelectorAll("[data-calendar-status=active]");
+      var activeDates = element.querySelectorAll(".vanilla-calendar-date");
       activeDates.forEach(function (date) {
         date.addEventListener("click", function () {
           removeActiveClass();

@@ -104,8 +104,16 @@ export class EventClient extends ElementClient {
   }
 
   initCalendarChangeEvents(): void {
-    this.calendarElment.addEventListener("click", () => {
+    this.calendarElment.addEventListener("click", (event) => {
+      let calendarTarget: any = event.target;
       this.renderClass.initRender();
+      event.stopImmediatePropagation();
+      if (calendarTarget.closest('div').matches('.vanilla-calendar-date--active')) {
+        this.inputElement.removeAttribute('disabled');
+      }
+      if (calendarTarget.closest('div').matches('.vanilla-calendar-date--disabled')) {
+        this.inputElement.setAttribute('disabled', null);
+      }
     });
   }
 }

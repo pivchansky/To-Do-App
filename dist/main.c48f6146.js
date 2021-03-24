@@ -601,8 +601,20 @@ var EventClient = function (_super) {
   EventClient.prototype.initCalendarChangeEvents = function () {
     var _this = this;
 
-    this.calendarElment.addEventListener("click", function () {
+    this.calendarElment.addEventListener("click", function (event) {
+      var calendarTarget = event.target;
+
       _this.renderClass.initRender();
+
+      event.stopImmediatePropagation();
+
+      if (calendarTarget.closest('div').matches('.vanilla-calendar-date--active')) {
+        _this.inputElement.removeAttribute('disabled');
+      }
+
+      if (calendarTarget.closest('div').matches('.vanilla-calendar-date--disabled')) {
+        _this.inputElement.setAttribute('disabled', null);
+      }
     });
   };
 
