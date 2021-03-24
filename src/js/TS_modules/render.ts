@@ -57,14 +57,22 @@ export class Render {
       } else {
         break;
       }
-      let currentSpanDate: object = converteToDate(currentDateText);
+      let currentSpanDate: any = converteToDate(currentDateText);
       let spanDate: number = +daySet[key].innerText;
+      let spanMonth: number = currentSpanDate.getMonth();
+      let spanYear: number = currentSpanDate.getFullYear();
       if (isNaN(spanDate)) return;
       daySet[key].classList.remove("vanilla-calendar-date--has-task");
       for (let key2 in this.storage) {
         let currentDate: number = new Date(+key2).getDate();
+        let currentMonth: number = new Date(+key2).getMonth();
+        let currentYear: number = new Date(+key2).getFullYear();
 
-        if (spanDate == currentDate) {
+        if (
+          spanDate == currentDate &&
+          spanMonth == currentMonth &&
+          spanYear == currentYear
+        ) {
           daySet[key].classList.add("vanilla-calendar-date--has-task");
         }
       }
