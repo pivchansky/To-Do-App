@@ -1,4 +1,4 @@
 /.cache
 /node_modules
 /js
-/src/js/TS_modules/dispatcher.ts
+src/js/TS_modules/eventClient.ts

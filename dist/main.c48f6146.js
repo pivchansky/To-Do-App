@@ -192,7 +192,9 @@ module.hot.accept(reloadCSS);
 },{"_css_loader":"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"js/function.js":[function(require,module,exports) {
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 },{}],"src/js/main.js":[function(require,module,exports) {
 "use strict";
 
