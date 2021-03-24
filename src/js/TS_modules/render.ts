@@ -60,16 +60,12 @@ export class Render {
       let currentSpanDate: object = converteToDate(currentDateText);
       let spanDate: number = +daySet[key].innerText;
       if (isNaN(spanDate)) return;
-
+      daySet[key].classList.remove("vanilla-calendar-date--has-task");
       for (let key2 in this.storage) {
         let currentDate: number = new Date(+key2).getDate();
 
         if (spanDate == currentDate) {
           daySet[key].classList.add("vanilla-calendar-date--has-task");
-        } else {
-          if (!((+currentSpanDate).toString() in this.storage)) {
-            daySet[key].classList.remove("vanilla-calendar-date--has-task");
-          }
         }
       }
     }

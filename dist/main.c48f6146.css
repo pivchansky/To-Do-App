@@ -381,10 +381,6 @@ template {
   text-align: center;
   transition: transform 0.5s;
 }
-.vanilla-calendar .vanilla-calendar-btn:hover {
-  transform: rotate(360deg);
-}
-
 .vanilla-calendar .vanilla-calendar-header {
   align-items: center;
   display: flex;

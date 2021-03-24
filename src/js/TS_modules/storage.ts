@@ -4,8 +4,10 @@ export class Storage {
 
   initStorage(): void {
     if (localStorage.getItem("toDoStorage")) {
-      // console.log(localStorage.getItem("toDoStorage"));
+      console.log(localStorage.getItem("toDoStorage"));
       this.toDoStorage = JSON.parse(localStorage.getItem("toDoStorage"));
+    } else{
+      this.toDoStorage = {};
     }
   }
 

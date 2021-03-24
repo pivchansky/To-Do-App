@@ -230,7 +230,10 @@ var Storage = function () {
 
   Storage.prototype.initStorage = function () {
     if (localStorage.getItem("toDoStorage")) {
+      console.log(localStorage.getItem("toDoStorage"));
       this.toDoStorage = JSON.parse(localStorage.getItem("toDoStorage"));
+    } else {
+      this.toDoStorage = {};
     }
   };
 
@@ -422,16 +425,13 @@ var Render = function () {
       var currentSpanDate = converteToDate(currentDateText);
       var spanDate = +daySet[key].innerText;
       if (isNaN(spanDate)) return;
+      daySet[key].classList.remove("vanilla-calendar-date--has-task");
 
       for (var key2 in this.storage) {
         var currentDate = new Date(+key2).getDate();
 
         if (spanDate == currentDate) {
           daySet[key].classList.add("vanilla-calendar-date--has-task");
-        } else {
-          if (!((+currentSpanDate).toString() in this.storage)) {
-            daySet[key].classList.remove("vanilla-calendar-date--has-task");
-          }
         }
       }
     }
