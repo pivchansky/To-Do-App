@@ -648,7 +648,7 @@ dom.setCalendarBody(document.body.querySelector(".vanilla-calendar-body"));
 var component = new components_1.ListComponent();
 var idGenerator = new idGenerator_1.IdGenerator();
 var message = new messageClient_1.MessageClient();
-var renderMashine = new render_1.Render(storage, dom, component);
+var renderMashine = new render_1.Render(storage.toDoStorage, dom, component);
 var client = new DOMClient_1.EventClient(storageDo, renderMashine, message, dom, idGenerator, storage.toDoStorage);
 client.initFormEvents();
 client.initListEvents();
@@ -688,7 +688,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55476" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59703" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -31,7 +31,7 @@ dom.setCalendarBody(document.body.querySelector(".vanilla-calendar-body"));
 let component = new ListComponent();
 let idGenerator = new IdGenerator();
 let message = new MessageClient();
-let renderMashine = new Render(storage, dom, component);
+let renderMashine = new Render(storage.toDoStorage, dom, component);
 let client = new EventClient(
   storageDo,
   renderMashine,
