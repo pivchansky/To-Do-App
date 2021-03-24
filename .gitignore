@@ -1,4 +1,4 @@
 /.cache
 /node_modules
 /js
-/.gitignore
+/src/js/TS_modules/dispatcher.ts
