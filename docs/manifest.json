@@ -19,7 +19,7 @@
     }
   ],
   "theme_color": "#c6ebde",
-  "background_color": "rgba(33,150,243,0)",
+  "background_color": "#c6ebde",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
