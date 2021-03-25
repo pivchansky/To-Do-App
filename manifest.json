@@ -28,6 +28,5 @@
   "background_color": "#c6ebde",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/",
-  "start_url": "/To-do-app/"
+  "scope": "/"
 }
