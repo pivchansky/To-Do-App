@@ -83,8 +83,8 @@ export class EventClient extends ElementClient {
         this.storageControllerClass.sendStorage();
       }
       if (listTarget.closest('div').matches(".list__item")) {
-        listTarget.classList.toggle("list__item_checked");
-        if (listTarget.classList.contains("list__item_checked")) {
+        listTarget.closest('div').classList.toggle("list__item_checked");
+        if (listTarget.closest('div').classList.contains("list__item_checked")) {
           let newOptions: any = this.storageControllerClass.takeTaskById(
             listTarget.dataset.taskId
           );

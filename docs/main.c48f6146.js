@@ -576,9 +576,9 @@ var EventClient = function (_super) {
       }
 
       if (listTarget.closest('div').matches(".list__item")) {
-        listTarget.classList.toggle("list__item_checked");
+        listTarget.closest('div').classList.toggle("list__item_checked");
 
-        if (listTarget.classList.contains("list__item_checked")) {
+        if (listTarget.closest('div').classList.contains("list__item_checked")) {
           var newOptions = _this.storageControllerClass.takeTaskById(listTarget.dataset.taskId);
 
           if (!newOptions) return;
@@ -701,7 +701,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59703" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64889" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
