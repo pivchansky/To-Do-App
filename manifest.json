@@ -16,6 +16,6 @@
       }],
   "scope": "/",
   "start_url": "/index.htm",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait"
 }
