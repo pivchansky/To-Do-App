@@ -28,5 +28,6 @@
   "background_color": "#c6ebde",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/"
+  "scope": "/",
+  "start_url": "https://pivchansky.github.io/To-do-app/"
 }
