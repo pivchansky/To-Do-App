@@ -13,5 +13,6 @@ Project is created with:
 * User has daily indicators with to-do list
 * On previous days, the user cannot add a deal, but can delete it
 * The app is fully responsive
+* Added a basic manifest config for PWA
 
 The project deployed [here.](https://pivchansky.github.io/To-do-app/)
